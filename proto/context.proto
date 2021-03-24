@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+option go_package = "pb;pb";
+
+package context;
+
+message Context {
+  string identity = 1;
+  string confidence = 3;
+}

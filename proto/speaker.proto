@@ -1,0 +1,37 @@
+syntax = "proto3";
+
+option go_package = "pb;pb";
+
+package speaker;
+
+service Speaker {
+  rpc Play (stream PlayRequest) returns (stream PlayStatus);
+  rpc SetGroup (SetGroupRequest) returns (SpeakerDefaultResponse);
+  rpc SetVolume (SetVolumeRequest) returns (SpeakerDefaultResponse);
+}
+
+message SpeakerDefaultResponse {
+  bool success = 1;
+  string error = 2;
+}
+
+message PlayRequest {
+  bytes audio = 1;
+}
+
+message PlayStatus {
+  int32 status = 1;
+}
+
+message BroadcastRequest {
+  repeated string ids = 1;
+  bytes audio = 2;
+}
+
+message SetVolumeRequest {
+  int32 volume = 1;
+}
+
+message SetGroupRequest {
+  string group = 1;
+}
