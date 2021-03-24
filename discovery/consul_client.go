@@ -8,6 +8,7 @@ import (
 	"github.com/q-assistant/service/logger"
 	"github.com/q-assistant/service/update"
 	"google.golang.org/grpc"
+	"os"
 	"time"
 )
 
@@ -23,7 +24,14 @@ type ConsulClient struct {
 }
 
 func NewConsulClient(ctx context.Context, logger *logger.Logger, updates chan *update.Update) (*ConsulClient, error) {
-	client, err := api.NewClient(api.DefaultConfig())
+	cnf := api.DefaultConfig()
+
+	addr := os.Getenv("SERVICE_DISCOVERY_ADDRESS")
+	if addr != "" {
+		cnf.Address = addr
+	}
+
+	client, err := api.NewClient(cnf)
 	if err != nil {
 		return nil, err
 	}
@@ -56,7 +64,7 @@ func (cc *ConsulClient) Register(registration *Registration) error {
 		Tags:    append([]string{"core"}, registration.Tags...),
 		Port:    registration.Port,
 		Address: registration.Address,
-		Meta: registration.Meta,
+		Meta:    registration.Meta,
 		Check: &api.AgentServiceCheck{
 			CheckID:                        cc.id,
 			TTL:                            "2s",
