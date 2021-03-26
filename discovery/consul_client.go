@@ -33,7 +33,7 @@ func NewConsulClient(ctx context.Context, logger *logger.Logger, updates chan *u
 
 	client, err := api.NewClient(cnf)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("discovery.consul.client: %w", err)
 	}
 
 	return &ConsulClient{
