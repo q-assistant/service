@@ -14,6 +14,7 @@ import (
 )
 
 type ConsulClient struct {
+	addr    string
 	data    map[string]interface{}
 	client  *api.Client
 	logger  *logger.Logger
@@ -36,6 +37,7 @@ func NewConsulClient(ctx context.Context, logger *logger.Logger, updates chan *u
 	}
 
 	c := &ConsulClient{
+		addr:    cnf.Address,
 		client:  client,
 		logger:  logger,
 		ctx:     ctx,
@@ -223,7 +225,7 @@ func (cc *ConsulClient) watch(key string) {
 	}
 
 	go func() {
-		if err := cc.watcher.Run("localhost:8500"); err != nil {
+		if err := cc.watcher.Run(cc.addr); err != nil {
 			log.Fatal(err)
 		}
 
