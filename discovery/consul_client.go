@@ -130,6 +130,7 @@ func (cc *ConsulClient) statusUpdate() {
 	}()
 
 	for range ticker.C {
+		cc.logger.Info("sending status update")
 		if err := cc.setStatus("running", HealthPassing); err != nil {
 			cc.logger.Error("error sending status update", err.Error())
 			ticker.Stop()
