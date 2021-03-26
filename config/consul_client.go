@@ -56,7 +56,7 @@ func (cc *ConsulClient) initial(data map[string]interface{}) error {
 	for k, c := range data {
 		kv, _, err := cc.client.KV().Get(k, nil)
 		if err != nil {
-			return err
+			return fmt.Errorf("config.consul.client.initial_kv_get: %w", err)
 		}
 
 		if kv == nil {
@@ -70,7 +70,7 @@ func (cc *ConsulClient) initial(data map[string]interface{}) error {
 				Key:   k,
 				Value: b,
 			}, nil); err != nil {
-				return err
+				return fmt.Errorf("config.consul.client.initial_kv_put: %w", err)
 			}
 		} else {
 			current := make(map[string]interface{})
@@ -95,7 +95,7 @@ func (cc *ConsulClient) initial(data map[string]interface{}) error {
 				Key:   kv.Key,
 				Value: b,
 			}, nil); err != nil {
-				return err
+				return fmt.Errorf("config.consul.client.initial_kv_put: %w", err)
 			}
 
 			cc.data[kv.Key] = current
@@ -200,7 +200,7 @@ func (cc *ConsulClient) getValue(path string) interface{} {
 func (cc *ConsulClient) watch(key string) {
 	wp, err := watch.Parse(map[string]interface{}{"type": "key", "key": key})
 	if err != nil {
-		log.Fatal(err)
+		log.Fatal(fmt.Errorf("config.consul.client.watch_parse: %w", err))
 	}
 
 	cc.watcher = wp
@@ -226,7 +226,7 @@ func (cc *ConsulClient) watch(key string) {
 
 	go func() {
 		if err := cc.watcher.Run(cc.addr); err != nil {
-			log.Fatal(err)
+			log.Fatal(fmt.Errorf("config.consul.client.watch_run: %w", err))
 		}
 
 		for {
