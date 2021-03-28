@@ -61,7 +61,7 @@ func (cc *ConsulClient) Register(registration *Registration) error {
 		Kind:    api.ServiceKindTypical,
 		ID:      cc.id,
 		Name:    registration.Name,
-		Tags:    append([]string{"core"}, registration.Tags...),
+		Tags:    registration.Tags,
 		Port:    registration.Port,
 		Address: registration.Address,
 		Meta:    registration.Meta,
