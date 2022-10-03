@@ -5,7 +5,7 @@ go 1.19
 require (
 	github.com/hashicorp/consul/api v1.15.2
 	github.com/matoous/go-nanoid/v2 v2.0.0
-	github.com/sirupsen/logrus v1.9.0
+	go.uber.org/zap v1.23.0
 	google.golang.org/grpc v1.49.0
 )
 
@@ -23,8 +23,10 @@ require (
 	github.com/mattn/go-isatty v0.0.12 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/mitchellh/mapstructure v1.4.1 // indirect
+	go.uber.org/atomic v1.7.0 // indirect
+	go.uber.org/multierr v1.6.0 // indirect
 	golang.org/x/net v0.0.0-20211216030914-fe4d6282115f // indirect
-	golang.org/x/sys v0.0.0-20220715151400-c0bba94af5f8 // indirect
+	golang.org/x/sys v0.0.0-20220412211240-33da011f77ad // indirect
 	golang.org/x/text v0.3.6 // indirect
 	google.golang.org/genproto v0.0.0-20200526211855-cb27e3aa2013 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
